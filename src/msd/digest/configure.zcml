@@ -1,0 +1,40 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="msd.digest">
+
+  <includeDependencies package="." />
+
+  <i18n:registerTranslations directory="locales" />
+
+  <include package=".browser" />
+
+
+  <adapter factory="msd.digest.dexterityforms.order.OrderFormAdapter"/>
+
+  <browser:page
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      name="order-pizza"
+      class="msd.digest.dexterityforms.order.OrderForm"
+      permission="zope2.View"
+      />
+
+  <genericsetup:registerProfile
+      name="default"
+      title="msd.digest"
+      directory="profiles/default"
+      description="Installs the msd.digest add-on."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:importStep
+      name="msd.digest-postInstall"
+      title="msd.digest post_install import step"
+      description="Post install import step from msd.digest"
+      handler=".setuphandlers.post_install">
+  </genericsetup:importStep>
+
+</configure>

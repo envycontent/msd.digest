@@ -1,0 +1,6 @@
+[report]
+include =
+    src/msd/*
+omit =
+    */test*
+    */upgrades/*
