@@ -72,7 +72,7 @@ class DepartmentDigestForm(form.Form):
         self.getTitle = data['digestTitle']
 
 
-        self.status = _(u"Report complete")
+        self.status = _(u"Report complete - nothing to report")
 
 
     @button.buttonAndHandler(u'Cancel')
@@ -99,19 +99,21 @@ class DepartmentDigestForm(form.Form):
             request_string = "https://talks.ox.ac.uk/api/collections/id/%s" %(params['list'])
             talksfeed = self.getResults(request_string, params)
 
-            for talk in talksfeed['_embedded']['talks']:
+            if '_embedded' in talksfeed.keys():
 
-                talk_start_date = datetime.strptime(talk['start'],'%Y-%m-%dT%H:%M:%SZ').date()
+                for talk in talksfeed['_embedded']['talks']:
 
-                if data['dateFrom'] < talk_start_date < data['dateTo']:
-                    results_set.append(talk)
+                    talk_start_date = datetime.strptime(talk['start'],'%Y-%m-%dT%H:%M:%SZ').date()
+
+                    if (data['dateFrom']-timedelta(days=1)) < talk_start_date < data['dateTo']:
+                        results_set.append(talk)
 
 
 
         if 'list' not in params.keys():
             request_string = "https://talks.ox.ac.uk/api/talks/search"
-            params['from'] = data['dateFrom'].strftime('%d/%m/%y')
-            params['to'] = data['dateTo'].strftime('%d/%m/%y')
+            params['from'] = data['dateFrom'].strftime('%Y-%m-%d')
+            params['to'] = data['dateTo'].strftime('%Y-%m-%d')
             params['count'] = '500'
             talksfeed = self.getResults(request_string, params)
 
@@ -122,17 +124,18 @@ class DepartmentDigestForm(form.Form):
             request_string = "https://talks.ox.ac.uk/api/collections/id/%s" %(params['list'])
             talksfeed = self.getResults(request_string, params)
 
-            for talk in talksfeed['_embedded']['talks']:
+            if '_embedded' in talksfeed.keys():
+                for talk in talksfeed['_embedded']['talks']:
 
-                talk_start_date = datetime.strptime(talk['start'],'%Y-%m-%dT%H:%M:%SZ').date()
+                    talk_start_date = datetime.strptime(talk['start'],'%Y-%m-%dT%H:%M:%SZ').date()
 
-                if data['dateFrom'] < talk_start_date < data['dateTo']:
-                    results_set.append(talk)
+                    if (data['dateFrom']-timedelta(days=1)) < talk_start_date < data['dateTo']:
+                        results_set.append(talk)
 
 
             request_string = "https://talks.ox.ac.uk/api/talks/search"
-            params['from'] = data['dateFrom'].strftime('%d/%m/%y')
-            params['to'] = data['dateTo'].strftime('%d/%m/%y')
+            params['from'] = data['dateFrom'].strftime('%Y-%m-%d')
+            params['to'] = data['dateTo'].strftime('%Y-%m-%d')
             params['count'] = '500'
             talksfeed = self.getResults(request_string, params)
 
