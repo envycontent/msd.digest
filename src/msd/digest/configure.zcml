@@ -13,14 +13,6 @@
   <include package=".browser" />
 
 
-  <adapter factory="msd.digest.dexterityforms.order.OrderFormAdapter"/>
-
-  <browser:page
-      for="Products.CMFCore.interfaces.ISiteRoot"
-      name="order-pizza"
-      class="msd.digest.dexterityforms.order.OrderForm"
-      permission="zope2.View"
-      />
 
   <genericsetup:registerProfile
       name="default"

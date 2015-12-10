@@ -91,6 +91,9 @@ class DepartmentDigestForm(form.Form):
 
         #got to create the request string here
         paramsNum = len(data['searchFor'])
+        params['from'] = data['dateFrom'].strftime('%Y-%m-%d')
+        params['to'] = data['dateTo'].strftime('%Y-%m-%d')
+        params['count'] = '500'
 
         for x in data['searchFor']:
             params[x['searchParam']]=x['searchValue']
@@ -103,18 +106,12 @@ class DepartmentDigestForm(form.Form):
 
                 for talk in talksfeed['_embedded']['talks']:
 
-                    talk_start_date = datetime.strptime(talk['start'],'%Y-%m-%dT%H:%M:%SZ').date()
-
-                    if (data['dateFrom']-timedelta(days=1)) < talk_start_date < data['dateTo']:
-                        results_set.append(talk)
+                    results_set.append(talk)
 
 
 
         if 'list' not in params.keys():
             request_string = "https://talks.ox.ac.uk/api/talks/search"
-            params['from'] = data['dateFrom'].strftime('%Y-%m-%d')
-            params['to'] = data['dateTo'].strftime('%Y-%m-%d')
-            params['count'] = '500'
             talksfeed = self.getResults(request_string, params)
 
             for talk in talksfeed['_embedded']['talks']:
@@ -126,17 +123,10 @@ class DepartmentDigestForm(form.Form):
 
             if '_embedded' in talksfeed.keys():
                 for talk in talksfeed['_embedded']['talks']:
-
-                    talk_start_date = datetime.strptime(talk['start'],'%Y-%m-%dT%H:%M:%SZ').date()
-
-                    if (data['dateFrom']-timedelta(days=1)) < talk_start_date < data['dateTo']:
-                        results_set.append(talk)
+                    results_set.append(talk)
 
 
             request_string = "https://talks.ox.ac.uk/api/talks/search"
-            params['from'] = data['dateFrom'].strftime('%Y-%m-%d')
-            params['to'] = data['dateTo'].strftime('%Y-%m-%d')
-            params['count'] = '500'
             talksfeed = self.getResults(request_string, params)
 
             for talk in talksfeed['_embedded']['talks']:
