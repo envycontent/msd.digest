@@ -38,3 +38,4 @@ fake-eggs/
 parts/
 dist/
 var/
+.DS_Store
