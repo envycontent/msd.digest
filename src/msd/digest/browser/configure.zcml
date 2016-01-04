@@ -24,5 +24,13 @@
     class=".department_digest_form.DepartmentDigestFormView"
     />
 
+  <browser:page
+    for="*"
+    name="haiku_whatson"
+    class=".oxtalkscollection.oxtalksCollection"
+    template="haiku-whatson.pt"
+    allowed_interface=".oxtalkscollection.IoxtalksCollection"
+    permission="zope.Public"
+  />
 
 </configure>
