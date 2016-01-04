@@ -5,6 +5,7 @@
       lang="en"
       i18n:domain="plone">
 <head>
+   <link target="blank" href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
    <link href="whatson-teal.css" media="screen" type="text/css" rel="stylesheet" />
 </head>
 

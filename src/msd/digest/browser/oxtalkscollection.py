@@ -39,6 +39,41 @@ class oxtalksCollection(BrowserView):
     def portal(self):
         return getToolByName(self.context, 'portal_url').getPortalObject()
 
+    def testcurrententries(self):
+
+        results_set = []
+        allItems = []
+        params = self.request.form
+
+        #got to create the request string here
+
+        params['from'] = datetime.today().strftime('%Y-%m-%d')
+        params['to'] = '2016-12-30'
+
+
+        if 'list' in params.keys():
+            request_string = "https://new.talks.ox.ac.uk/api/collections/id/%s" %(params['list'])
+            talksfeed = self.getResults(request_string, params)
+
+            if '_embedded' in talksfeed.keys():
+
+                for talk in talksfeed['_embedded']['talks']:
+
+                    results_set.append(talk)
+
+
+        request_string = "https://new.talks.ox.ac.uk/api/talks/search"
+        talksfeed = self.getResults(request_string, params)
+
+        for talk in talksfeed['_embedded']['talks']:
+             results_set.append(talk)
+
+
+        if results_set is not None:
+            
+            return "success"
+
+
     def currententries(self):
 
         results_set = []

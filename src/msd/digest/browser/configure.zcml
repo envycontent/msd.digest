@@ -33,4 +33,14 @@
     permission="zope.Public"
   />
 
+  <browser:page
+    for="*"
+    name="testing-template"
+    class=".oxtalkscollection.oxtalksCollection"
+    template="testtemplate.pt"
+    allowed_interface=".oxtalkscollection.IoxtalksCollection"
+    permission="zope.Public"
+  />
+
+
 </configure>
