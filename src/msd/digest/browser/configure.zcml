@@ -35,6 +35,15 @@
 
   <browser:page
     for="*"
+    name="haiku_tile"
+    class=".oxtalkscollection.oxtalksCollection"
+    template="haiku-tile.pt"
+    allowed_interface=".oxtalkscollection.IoxtalksCollection"
+    permission="zope.Public"
+  />
+
+  <browser:page
+    for="*"
     name="testing-template"
     class=".oxtalkscollection.oxtalksCollection"
     template="testtemplate.pt"
