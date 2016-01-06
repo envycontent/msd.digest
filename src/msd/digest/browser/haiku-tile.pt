@@ -5,7 +5,8 @@
       lang="en"
       i18n:domain="plone">
 <head>
-<link href="tile-teal.css" media="screen" type="text/css" rel="stylesheet" />
+<link target="blank" href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
+<link href="tile-teal.css" tal:attributes="href python:'tile-%s.css' %(request.styles)" media="screen" type="text/css" rel="stylesheet" />
 </head>
 <body>
     <ul tal:condition="view/currententries" class="media-list">
