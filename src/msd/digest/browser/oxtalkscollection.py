@@ -97,13 +97,13 @@ class oxtalksCollection(BrowserView):
 
                     results_set.append(talk)
 
+        if 'organising_department' in params.keys():
 
-        request_string = "https://new.talks.ox.ac.uk/api/talks/search"
-        talksfeed = self.getResults(request_string, params)
+            request_string = "https://new.talks.ox.ac.uk/api/talks/search"
+            talksfeed = self.getResults(request_string, params)
 
-        for talk in talksfeed['_embedded']['talks']:
-             results_set.append(talk)
-
+            for talk in talksfeed['_embedded']['talks']:
+                 results_set.append(talk)
 
 
 

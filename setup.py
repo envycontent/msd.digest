@@ -47,6 +47,7 @@ setup(
         'setuptools',
         'z3c.jbot',
         'plone.app.z3cform',
+        'plone.app.dexterity',
     ],
     extras_require={
         'test': [
