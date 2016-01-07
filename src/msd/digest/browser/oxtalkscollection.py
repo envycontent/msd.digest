@@ -29,6 +29,7 @@ class oxtalksCollection(BrowserView):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        self.request.response.setHeader('X-Frame-Options', 'ALLOWALL')
         
         
     @property
