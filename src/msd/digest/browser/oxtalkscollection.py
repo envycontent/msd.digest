@@ -134,14 +134,15 @@ class oxtalksCollection(BrowserView):
 
                 speaker = '; '.join(speakers_list)
 
-                start_time = x.get('start','')
+                start_time = x.get('formatted_time','')
+                start_date = x.get('start','')
                 end_time = x.get('end','')
                 special_message = x.get('special_message','')
-                fm_startdate = datetime.strptime(start_time,'%Y-%m-%dT%H:%M:%SZ').strftime('%A, %d %B %Y').replace(', 0',', ')
-                fm_starttime = datetime.strptime(start_time,'%Y-%m-%dT%H:%M:%SZ').strftime('%I:%M%p').strip('0').replace(':00','').lower()
+                fm_startdate = datetime.strptime(start_date,'%Y-%m-%dT%H:%M:%SZ').strftime('%A, %d %B %Y').replace(', 0',', ')
+                fm_starttime = datetime.strptime(start_time,'%H:%M').strftime('%I:%M%p').strip('0').replace(':00','').lower()
                 fm_endtime = datetime.strptime(end_time,'%Y-%m-%dT%H:%M:%SZ').strftime('%I:%M%p').strip('0')
-                fm_startday = datetime.strptime(start_time,'%Y-%m-%dT%H:%M:%SZ').strftime('%d').lstrip('0')
-                fm_startmonth = datetime.strptime(start_time,'%Y-%m-%dT%H:%M:%SZ').strftime('%B %Y')
+                fm_startday = datetime.strptime(start_date,'%Y-%m-%dT%H:%M:%SZ').strftime('%d').lstrip('0')
+                fm_startmonth = datetime.strptime(start_date,'%Y-%m-%dT%H:%M:%SZ').strftime('%B %Y')
 
 
                 allItems.append({'description': description,
@@ -152,6 +153,7 @@ class oxtalksCollection(BrowserView):
                     'series_id': series_id,
                     'talk_id': talk_id,
                     'start_time': start_time,
+                    'start_date': start_date,
                     'end_time': end_time,
                     'special_message': special_message,
                     'fm_startdate': fm_startdate,
@@ -163,7 +165,7 @@ class oxtalksCollection(BrowserView):
                     'talk_ics': talk_ics,})
 
 
-            allItems.sort(key=lambda x: x["start_time"], reverse=False)
+            allItems.sort(key=lambda x: x["start_date"], reverse=False)
             slicedItems = allItems[:int(params['count'])]
 
             groupedItems = [{'startmonth': name, 'talkslist': list(group)} for name, group in groupby(slicedItems, lambda p:p['fm_startmonth'])]
