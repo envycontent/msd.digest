@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from itertools import groupby
+import arrow
 
 from zope.interface import Interface
 from zope.schema import TextLine
@@ -166,11 +167,11 @@ class DepartmentDigestForm(form.Form):
                 start_date = x.get('start','')
                 end_time = x.get('end','')
                 special_message = x.get('special_message','')
-                fm_startdate = datetime.strptime(start_date,'%Y-%m-%dT%H:%M:%SZ').strftime('%A, %d %B %Y').replace(', 0',', ')
-                fm_starttime = datetime.strptime(start_time,'%H:%M').strftime('%I:%M%p').strip('0').replace(':00','').lower()
-                fm_endtime = datetime.strptime(end_time,'%Y-%m-%dT%H:%M:%SZ').strftime('%I:%M%p').strip('0')
-                fm_startday = datetime.strptime(start_date,'%Y-%m-%dT%H:%M:%SZ').strftime('%d').lstrip('0')
-                fm_startmonth = datetime.strptime(start_date,'%Y-%m-%dT%H:%M:%SZ').strftime('%B %Y')
+                fm_startdate = arrow.get(start_date).format('dddd, D MMMM YYYY')
+                fm_starttime = arrow.get(start_time,'HH:mm').format('h:mma')
+                fm_endtime = arrow.get(end_time).format('h:mma')
+                fm_startday = arrow.get(start_date).format('D')
+                fm_startmonth = arrow.get(start_date).format('MMMM YYYY')
 
 
                 allItems.append({'description': description,
