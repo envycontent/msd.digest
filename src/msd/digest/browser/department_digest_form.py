@@ -44,7 +44,6 @@ class IDepartmentDigestForm(Interface):
 
     dateTo = Date(
         title=_(u"End Date"),
-        description=_(u"Choose the day after your last talk"),
         required=False
             )
 
@@ -144,7 +143,7 @@ class DepartmentDigestForm(form.Form):
                 if x.get('location_summary'):
                     venue = x.get('location_summary','')
                 else:
-                    venue = ""
+                    venue = x.get('location_details','')
                 if x.get('series'):
                     series_array = x.get('series','')
                     series = series_array.get('title','')
@@ -160,9 +159,19 @@ class DepartmentDigestForm(form.Form):
 
                 for entry in x['_embedded']['speakers']:
                     speakers_list.append ((entry['name'] + ', ' + entry['bio']).rstrip(', '))
+                
+                various_speakers = x['_embedded'].get('various_speakers','')
+                
+                if various_speakers:
+                    speaker = 'Various speakers'
+                else:                    
+                    speaker = '; '.join(speakers_list)
 
-                speaker = '; '.join(speakers_list)
-
+                status = x.get('status','')
+                if status == 'cancelled':
+                    cancelled = True
+                else:
+                    cancelled = False
                 start_time = x.get('formatted_time','')
                 start_date = x.get('start','')
                 end_time = x.get('end','')
@@ -177,6 +186,7 @@ class DepartmentDigestForm(form.Form):
                 allItems.append({'description': description,
                     'Title': Title,
                     'speaker': speaker,
+                    'cancelled': cancelled,
                     'venue': venue,
                     'series': series,
                     'series_id': series_id,
