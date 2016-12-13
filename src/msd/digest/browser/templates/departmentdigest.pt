@@ -89,15 +89,16 @@ Check the up-to-date list on <a href="http://new.talks.ox.ac.uk">Oxford Talks</a
 </tal:condition>
        
 <tal:notCancelled tal:condition="python: entry['cancelled']==False">
-
+<tal:condition condition="entry/special_message">
+       <span style="font-style: italic;" tal:content="entry/special_message">Additional information field in here</span><br />
+ </tal:condition> 
 <tal:condition condition="entry/series">
        <span tal:content="entry/series">Additional information field in here</span><br />
  </tal:condition> 
  <tal:condition condition="entry/venue">     
        <span tal:content="entry/venue">WIMM Seminar Room</span><br />
 </tal:condition>
-       <span> <a tal:attributes="href entry/talk_ics" class="icalendar_link_url">Download to your calendar</a> | <a href="" tal:attributes="href entry/talk_link">Oxford Talks</a>
-                        </span>
+       <span> <a tal:attributes="href entry/talk_ics" class="icalendar_link_url">Download to your calendar</a> | <a href="" tal:attributes="href entry/talk_link">Oxford Talks</a></span><span tal:condition="entry/booking_url"> | <a href="" tal:attributes="href entry/booking_url">Book</a></span>
 </tal:notCancelled>
 
 <tal:cancelled tal:condition="python: entry['cancelled']==True">
