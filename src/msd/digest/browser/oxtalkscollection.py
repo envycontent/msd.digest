@@ -50,7 +50,7 @@ class oxtalksCollection(BrowserView):
         #got to create the request string here
 
         params['from'] = datetime.today().strftime('%Y-%m-%d')
-        params['to'] = '2016-12-30'
+        params['to'] = '2018-12-30'
 
 
         if 'list' in params.keys():
@@ -85,7 +85,7 @@ class oxtalksCollection(BrowserView):
         #got to create the request string here
         
         params['from'] = datetime.today().strftime('%Y-%m-%d')
-        params['to'] = '2016-12-30'
+        params['to'] = '2018-12-30'
         
 
         if 'list' in params.keys():
