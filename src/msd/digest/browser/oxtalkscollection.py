@@ -54,7 +54,7 @@ class oxtalksCollection(BrowserView):
 
 
         if 'list' in params.keys():
-            request_string = "https://new.talks.ox.ac.uk/api/collections/id/%s" %(params['list'])
+            request_string = "https://talks.ox.ac.uk/api/collections/id/%s" %(params['list'])
             talksfeed = self.getResults(request_string, params)
 
             if '_embedded' in talksfeed.keys():
@@ -64,7 +64,7 @@ class oxtalksCollection(BrowserView):
                     results_set.append(talk)
 
 
-        request_string = "https://new.talks.ox.ac.uk/api/talks/search"
+        request_string = "https://talks.ox.ac.uk/api/talks/search"
         talksfeed = self.getResults(request_string, params)
 
         for talk in talksfeed['_embedded']['talks']:
@@ -84,12 +84,24 @@ class oxtalksCollection(BrowserView):
 
         #got to create the request string here
         
-        params['from'] = datetime.today().strftime('%Y-%m-%d')
-        params['to'] = '2018-12-30'
+        if 'from' not in params.keys():
+            params['from'] = datetime.today().strftime('%Y-%m-%d')
         
-
+        if 'to' not in params.keys():
+            params['to'] = 'plus10'
+            
+        if 'count' not in params.keys():
+            params['count'] = 20
+            
+        if params['count']:
+            numberoftalks = int(params['count'])
+        else:
+            numberoftalks = 20
+        
+        
+       
         if 'list' in params.keys():
-            request_string = "https://new.talks.ox.ac.uk/api/collections/id/%s" %(params['list'])
+            request_string = "https://talks.ox.ac.uk/api/collections/id/%s" %(params['list'])
             talksfeed = self.getResults(request_string, params)
 
             if '_embedded' in talksfeed.keys():
@@ -100,7 +112,7 @@ class oxtalksCollection(BrowserView):
 
         if 'organising_department' in params.keys():
 
-            request_string = "https://new.talks.ox.ac.uk/api/talks/search"
+            request_string = "https://talks.ox.ac.uk/api/talks/search"
             talksfeed = self.getResults(request_string, params)
 
             for talk in talksfeed['_embedded']['talks']:
@@ -125,8 +137,8 @@ class oxtalksCollection(BrowserView):
                     series = ""
                     series_id = ""
                 talk_id = x.get('slug','')
-                talk_link = 'http://new.talks.ox.ac.uk/talks/id/%s' % talk_id
-                talk_ics = 'http://new.talks.ox.ac.uk/api/talks/%s.ics' % talk_id
+                talk_link = 'http://talks.ox.ac.uk/talks/id/%s' % talk_id
+                talk_ics = 'http://talks.ox.ac.uk/api/talks/%s.ics' % talk_id
                 speakers_list = []
                 speaker = ''
 
@@ -167,7 +179,7 @@ class oxtalksCollection(BrowserView):
 
 
             allItems.sort(key=lambda x: x["start_date"], reverse=False)
-            slicedItems = allItems[:int(params['count'])]
+            slicedItems = allItems[:numberoftalks]
 
             groupedItems = [{'startmonth': name, 'talkslist': list(group)} for name, group in groupby(slicedItems, lambda p:p['fm_startmonth'])]
 
