@@ -68,6 +68,7 @@ class oxtalksCollection(BrowserView):
         today = datetime.today()
 
         #got to create the request string here
+
         if 'from' not in params.keys():
             params['from'] = today.strftime('%Y-%m-%d')
         
@@ -92,7 +93,6 @@ class oxtalksCollection(BrowserView):
                 params['from'] = firstday.strftime('%Y-%m-%d')
                 params['to'] = lastday.strftime('%Y-%m-%d')
                  
-                
 
 
         if 'list' in params.keys():
@@ -260,7 +260,7 @@ class oxtalksCollection(BrowserView):
             params['from'] = datetime.today().strftime('%Y-%m-%d')
         
         if 'to' not in params.keys():
-            params['to'] = 'plus14'
+            params['to'] = 'plus10'
             
         if 'count' not in params.keys():
             params['count'] = 20
@@ -270,7 +270,8 @@ class oxtalksCollection(BrowserView):
         else:
             numberoftalks = 20
         
-
+        
+       
         if 'list' in params.keys():
             request_string = "https://talks.ox.ac.uk/api/collections/id/%s" %(params['list'])
             talksfeed = self.getResults(request_string, params)
@@ -350,6 +351,7 @@ class oxtalksCollection(BrowserView):
 
 
             allItems.sort(key=lambda x: x["start_date"], reverse=False)
+
             
             if numberoftalks > 0:
             
@@ -358,6 +360,7 @@ class oxtalksCollection(BrowserView):
             else:
                 
                 slicedItems = allItems
+
 
             groupedItems = [{'startmonth': name, 'talkslist': list(group)} for name, group in groupby(slicedItems, lambda p:p['fm_startmonth'])]
 
