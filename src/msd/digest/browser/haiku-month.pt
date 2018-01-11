@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      i18n:domain="plone">
+<head>
+   <link target="blank" href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">
+   <link href="whatson-teal.css" tal:attributes="href python:'whatson-%s.css' %(request.styles)" media="screen" type="text/css" rel="stylesheet" />
+</head>
+
+
+<body>
+
+      <ul tal:condition="view/monthentries" class="list-unstyled">
+          <li>
+             <ul class="media-list">
+	
+	         
+			 <h3 tal:content="view/monthname">November 2014</h3><hr>
+              <tal:entry
+                         tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime"
+                         tal:repeat="entry view/monthentries"> 
+              
+               <li class="media">
+                  <h3 style="margin-top:0" class="pull-left">
+                      <span tal:content="entry/fm_startday" class="details-date">24</span>
+                  </h3>
+                  <div class="media-body">
+                    <div class="row">
+                      <div class="col-xs-10">
+                        <h4 class="media-heading">
+                          <a class="state-published" href="" target="new" tal:attributes="href entry/talk_link; title entry/Title" tal:content="structure entry/Title">
+                              Metastatic Cascade - Macrophages Lead the Way
+                          </a>
+                        </h4>
+                      </div>
+                      <div class="col-xs-2 text-right">
+                        <span>
+                          <a tal:attributes="href entry/talk_ics" href="" title="Add this talk to your calendar">
+                             <i class="glyphicon-calendar icon-sm"></i>
+                          </a>
+                        </span>
+                      </div>
+                  </div>
+                  <p class="event-speaker">
+                      <a class="state-published" title="" href="" target="new" tal:attributes="href entry/talk_link; title entry/speaker">
+                        <span tal:content="entry/speaker">Professor Jeffrey Pollard, Director, MRC Centre for Reproductive Health, University of Edinburgh</span>
+                      </a>
+                  </p>
+                  <p class="details">
+                      <span tal:replace="entry/fm_startdate"> Start Date</span>, 
+                      <span tal:replace="entry/fm_starttime"> Start Time</span>
+
+                            @ <span class="location" tal:replace="entry/venue">WIMM Seminar Room</span>
+                  </p>
+                </div>
+              </li>
+               <hr>
+              </tal:entry>
+            </ul>
+        </li>
+    </ul>
+    <p class='indent'>
+        <a class="btn btn-primary" target="new" href="http://www.ox.ac.uk" tal:attributes="href python:'http://talks.ox.ac.uk/'">More Talks
+        </a>
+    </p>
+    <div class="waiting" tal:condition="not: view/currententries">Waiting for Oxford Talks</div>
+    
+</body>
+</html>
+

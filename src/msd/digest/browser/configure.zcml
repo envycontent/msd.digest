@@ -32,6 +32,15 @@
     allowed_interface=".oxtalkscollection.IoxtalksCollection"
     permission="zope.Public"
   />
+  
+  <browser:page
+    for="*"
+    name="haiku_month"
+    class=".oxtalkscollection.oxtalksCollection"
+    template="haiku-month.pt"
+    allowed_interface=".oxtalkscollection.IoxtalksCollection"
+    permission="zope.Public"
+  />
 
   <browser:page
     for="*"
